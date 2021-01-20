@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Controller : MonoBehaviour
+public class VfxController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] AudioQuads audioQuads;
     void Start()
     {
         
@@ -15,7 +15,12 @@ public class Controller : MonoBehaviour
     {
         Vector3 _mouse = new Vector3(Input.mousePosition.x / Screen.width - 0.5f, Input.mousePosition.y / Screen.height - 0.5f, 0);
         var vfx = GetComponent<UnityEngine.VFX.VisualEffect>();
-        vfx.SetVector3("MousePostion", _mouse);
+        // vfx.SetVector3("MousePostion", _mouse);
+
+        vfx.SetTexture("PositionMap",audioQuads.PositionMap);
+        // vfx.SetTexture("VelocityMap", audioQuads.VelocityMap);
+
+
 
     }
 }

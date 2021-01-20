@@ -72,7 +72,7 @@ MonoBehaviour:
     x: 483
     y: -771
     width: 1728
-    height: 2611
+    height: 2604
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3508,7 +3508,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.6
+      m_SerializableObject: 0
     m_Space: 2147483647
   m_Property:
     name: smoothness
@@ -3542,7 +3542,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0
+      m_SerializableObject: 1
     m_Space: 2147483647
   m_Property:
     name: metallic

@@ -19,7 +19,7 @@ public class AudioQuads : MonoBehaviour
     private float[] _spectrumData = new float[8192];
 
     private List<Vector3> _lightListPos = new List<Vector3>();
-    private GameObject[] _quadLights;
+    private QuadLights _quadLights;
 
     void Start()
     {
@@ -46,6 +46,11 @@ public class AudioQuads : MonoBehaviour
         };
 
 
+        _quadLights =  new QuadLights(_prefab, 6, this.transform);
+
+
+        // thisAudioSource.Play();
+
 
 
     }
@@ -57,7 +62,7 @@ public class AudioQuads : MonoBehaviour
 
         _lightListPos.Clear();
         var _startA = spectrumArea.x + (spectrumArea.y - spectrumArea.x) / 2;
-        var _step = 0.025f;
+        var _step = 0.1f;
         for (int i = spectrumArea.x; i < spectrumArea.y; ++i)
         {
             var _cs = _spectrumData[i] * 30;
@@ -65,18 +70,21 @@ public class AudioQuads : MonoBehaviour
             Vector3 _c_p = new Vector3(Mathf.Sin((i - _startA) * _step) * R, _cs, Mathf.Cos((i - _startA) * _step) * R);
             Vector3 _n_p = new Vector3(Mathf.Sin((i + 1 - _startA) * _step) * R, _ns, Mathf.Cos((i - _startA + 1) * _step) * R);
 
-            // Vector3 _c_p = new Vector3((i - spectrumArea.x) * 0.5f, _spectrumData[i] * 100, 0);
-            // Vector3 _n_p = new Vector3((i - spectrumArea.x + 1) * 0.5f, _spectrumData[i + 1] * 100, 0);
+            if (i % 10 == 0) _lightListPos.Add(_c_p);
+
+
 
             for (int j = 0; j < 10; ++j)
             {
                 float _x = _c_p.x + (_n_p.x - _c_p.x) * j / 10;
                 float _y = _c_p.y + (_n_p.y - _c_p.y) * j / 10;
-                _positionPixels[(i - spectrumArea.x) * 10 + j] = new Color(_x, _y, 0, 1);
+                float _z = _c_p.z + (_n_p.z - _c_p.z) * j / 10;
+                _positionPixels[(i - spectrumArea.x) * 10 + j] = new Color(_x, _y, _z, 1);
             }
-
-            if (i % 8 == 0) _lightListPos.Add(_c_p + this.transform.position);
         }
+
+
+        _quadLights.UpdatePos(_lightListPos);
 
 
 
@@ -120,7 +128,7 @@ public class AudioQuads : MonoBehaviour
         Gizmos.color = Color.green;
 
         var _startA = spectrumArea.x + (spectrumArea.y - spectrumArea.x) / 2;
-        var _step = 0.025f;
+        var _step = 0.1f;
         for (int i = spectrumArea.x; i < spectrumArea.y; ++i)
         {
             var _cs = _spectrumData[i] * 30;
