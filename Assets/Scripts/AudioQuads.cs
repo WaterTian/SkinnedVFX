@@ -65,8 +65,8 @@ public class AudioQuads : MonoBehaviour
         var _step = 0.1f;
         for (int i = spectrumArea.x; i < spectrumArea.y; ++i)
         {
-            var _cs = _spectrumData[i] * 30;
-            var _ns = _spectrumData[i + 1] * 30;
+            var _cs = _spectrumData[i] * 40;
+            var _ns = _spectrumData[i + 1] * 40;
             Vector3 _c_p = new Vector3(Mathf.Sin((i - _startA) * _step) * R, _cs, Mathf.Cos((i - _startA) * _step) * R);
             Vector3 _n_p = new Vector3(Mathf.Sin((i + 1 - _startA) * _step) * R, _ns, Mathf.Cos((i - _startA + 1) * _step) * R);
 
@@ -123,25 +123,20 @@ public class AudioQuads : MonoBehaviour
     }
 
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.green;
 
-        var _startA = spectrumArea.x + (spectrumArea.y - spectrumArea.x) / 2;
-        var _step = 0.1f;
-        for (int i = spectrumArea.x; i < spectrumArea.y; ++i)
-        {
-            var _cs = _spectrumData[i] * 30;
-            var _ns = _spectrumData[i + 1] * 30;
-            Vector3 _c_p = new Vector3(Mathf.Sin((i - _startA) * _step) * R, _cs, Mathf.Cos((i - _startA) * _step) * R);
-            Vector3 _n_p = new Vector3(Mathf.Sin((i + 1 - _startA) * _step) * R, _ns, Mathf.Cos((i - _startA + 1) * _step) * R);
-
-
-            // Vector3 _c_p = new Vector3((i - spectrumArea.x) * 0.5f, _spectrumData[i] * 100, 0);
-            // Vector3 _n_p = new Vector3((i - spectrumArea.x + 1) * 0.5f, _spectrumData[i + 1] * 100, 0);
-
-            Gizmos.DrawLine(gameObject.transform.TransformPoint(_c_p), gameObject.transform.TransformPoint(_n_p));
-        }
-    }
+    //     var _startA = spectrumArea.x + (spectrumArea.y - spectrumArea.x) / 2;
+    //     var _step = 0.1f;
+    //     for (int i = spectrumArea.x; i < spectrumArea.y; ++i)
+    //     {
+    //         var _cs = _spectrumData[i] * 30;
+    //         var _ns = _spectrumData[i + 1] * 30;
+    //         Vector3 _c_p = new Vector3(Mathf.Sin((i - _startA) * _step) * R, _cs, Mathf.Cos((i - _startA) * _step) * R);
+    //         Vector3 _n_p = new Vector3(Mathf.Sin((i + 1 - _startA) * _step) * R, _ns, Mathf.Cos((i - _startA + 1) * _step) * R);
+    //         Gizmos.DrawLine(gameObject.transform.TransformPoint(_c_p), gameObject.transform.TransformPoint(_n_p));
+    //     }
+    // }
 
 }
