@@ -25,7 +25,7 @@ public class QuadLights
         }
     }
 
-    public void UpdatePos(List<Vector3> posList)
+    public void UpdatePos(Vector3[] _posList, float _size = 0.1f)
     {
         var t = Time.time;
         
@@ -33,18 +33,17 @@ public class QuadLights
 
         for (int i = 0; i < _instanceCount; i++)
         {
-            if(i>=posList.Count) return;
-
-            _lightObjs[i].transform.localPosition = new Vector3(posList[i].x,0,posList[i].z);
+            
+            _lightObjs[i].transform.localPosition = new Vector3(_posList[i].x,0,_posList[i].z);
             _lightObjs[i].transform.LookAt(Vector3.zero);
 
-            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetAreaLightSize(new Vector2(0.1f, 0.1f+posList[i].y));
-            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetIntensity(posList[i].y);
+            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetAreaLightSize(new Vector2(_size, _size +_posList[i].y));
+            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetIntensity(_posList[i].y);
 
 
 
             var hue = Mathf.Sin(t*0.1f+i*0.2f) * 0.5f + 0.5f;
-            var saturation = 0.1f + posList[i].y;
+            var saturation = 0.1f + _posList[i].y;
             if(saturation>1) saturation =1;
             _lightObjs[i].GetComponent<Light>().color = Color.HSVToRGB(hue,saturation, saturation);
 

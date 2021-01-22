@@ -127,7 +127,7 @@ public class AudioLines : MonoBehaviour
 
         for (var i = 0; i < _vertices.Length; i++)
         {
-            var c = (math.sin(_palette1 * i + _palette2 * t) + 1) * 1.5f;
+            var c = (math.sin(_palette1 * i + _palette2 * t) + 1) * 2f;
             _colors[i] = new Color(c.x, c.y, c.z);
         }
         // _vertices[_vertices.Length - 1] = _vertices[0];

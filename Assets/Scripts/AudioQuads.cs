@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class AudioQuads : MonoBehaviour
 {
+    [SerializeField] AudioSource thisAudioSource;
+    [SerializeField] Vector2Int spectrumArea = new Vector2Int(0, 64);
     [Space]
     [SerializeField] GameObject _prefab = null;
     [Space]
-    [SerializeField] AudioSource thisAudioSource;
-    [SerializeField] Vector2Int spectrumArea = new Vector2Int(0, 64);
-
     public Texture2D PositionMap;
     private Texture2D _prePositionMap;
     public Texture2D VelocityMap;
@@ -18,8 +17,10 @@ public class AudioQuads : MonoBehaviour
 
     private float[] _spectrumData = new float[8192];
 
-    private List<Vector3> _lightListPos = new List<Vector3>();
+    private Vector3[] _lightsPos;
     private QuadLights _quadLights;
+
+    public float LightSize=0.1f;
 
     void Start()
     {
@@ -46,10 +47,9 @@ public class AudioQuads : MonoBehaviour
         };
 
 
+
+        _lightsPos = new Vector3[6];
         _quadLights =  new QuadLights(_prefab, 6, this.transform);
-
-
-        // thisAudioSource.Play();
 
 
 
@@ -60,7 +60,6 @@ public class AudioQuads : MonoBehaviour
 
         var _positionPixels = PositionMap.GetPixels();
 
-        _lightListPos.Clear();
         var _startA = spectrumArea.x + (spectrumArea.y - spectrumArea.x) / 2;
         var _step = 0.1f;
         for (int i = spectrumArea.x; i < spectrumArea.y; ++i)
@@ -70,8 +69,9 @@ public class AudioQuads : MonoBehaviour
             Vector3 _c_p = new Vector3(Mathf.Sin((i - _startA) * _step) * R, _cs, Mathf.Cos((i - _startA) * _step) * R);
             Vector3 _n_p = new Vector3(Mathf.Sin((i + 1 - _startA) * _step) * R, _ns, Mathf.Cos((i - _startA + 1) * _step) * R);
 
-            if (i % 10 == 0) _lightListPos.Add(_c_p);
-
+            if (i % 10 == 0){
+                _lightsPos[i / 10 - 1] = _c_p;
+            }
 
 
             for (int j = 0; j < 10; ++j)
@@ -82,9 +82,6 @@ public class AudioQuads : MonoBehaviour
                 _positionPixels[(i - spectrumArea.x) * 10 + j] = new Color(_x, _y, _z, 1);
             }
         }
-
-
-        _quadLights.UpdatePos(_lightListPos);
 
 
 
@@ -114,9 +111,16 @@ public class AudioQuads : MonoBehaviour
         _prePositionMap.SetPixels(_positionPixels);
         _prePositionMap.Apply();
 
-
-
     }
+
+    void LateUpdate()
+    {
+
+        _quadLights.UpdatePos(_lightsPos,LightSize);
+    }
+
+
+
     void OnDestroy()
     {
 

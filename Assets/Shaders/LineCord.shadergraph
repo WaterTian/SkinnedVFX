@@ -728,7 +728,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Alpha",
     "m_StageCapability": 2,
-    "m_Value": 1.0,
+    "m_Value": 0.5,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }
@@ -919,9 +919,9 @@
     "m_ShaderOutputName": "Emission",
     "m_StageCapability": 2,
     "m_Value": {
-        "x": 2.0,
-        "y": 2.0,
-        "z": 2.0
+        "x": 0.9882352948188782,
+        "y": 0.9882352948188782,
+        "z": 0.9882352948188782
     },
     "m_DefaultValue": {
         "x": 0.0,
