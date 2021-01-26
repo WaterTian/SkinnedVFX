@@ -37,15 +37,22 @@ public class QuadLights
             _lightObjs[i].transform.localPosition = new Vector3(_posList[i].x,0,_posList[i].z);
             _lightObjs[i].transform.LookAt(Vector3.zero);
 
-            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetAreaLightSize(new Vector2(_size, _size +_posList[i].y));
-            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetIntensity(_posList[i].y);
+            float intensity = _posList[i].y;
+
+            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetAreaLightSize(new Vector2(_size, _size +intensity));
+            _lightObjs[i].GetComponent<HDAdditionalLightData>().SetIntensity(intensity);
+
+            _lightObjs[i].transform.GetChild(0).transform.localScale = new Vector3(_size, _size + intensity,1);
 
 
 
             var hue = Mathf.Sin(t*0.1f+i*0.2f) * 0.5f + 0.5f;
-            var saturation = 0.1f + _posList[i].y;
+            var saturation = 0.1f + intensity;
             if(saturation>1) saturation =1;
-            _lightObjs[i].GetComponent<Light>().color = Color.HSVToRGB(hue,saturation, saturation);
+            var _color = Color.HSVToRGB(hue, saturation, saturation);
+            _lightObjs[i].GetComponent<Light>().color =_color;
+            _lightObjs[i].transform.GetChild(0).GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+            _lightObjs[i].transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_EmissionColor",_color);
 
 
         }
