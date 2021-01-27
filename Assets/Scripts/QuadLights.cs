@@ -51,9 +51,13 @@ public class QuadLights
             if(saturation>1) saturation =1;
             var _color = Color.HSVToRGB(hue, saturation, saturation);
             _lightObjs[i].GetComponent<Light>().color =_color;
-            _lightObjs[i].transform.GetChild(0).GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-            _lightObjs[i].transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_EmissionColor",_color);
 
+            Material _mat = new Material(Shader.Find("HDRP/Lit"));
+
+            _mat.SetColor("_EmissiveColor", _color);
+            _mat.SetInt("_UseEmissiveIntensity",1);
+            _mat.SetFloat("_EmissiveIntensity",intensity*0.01f);
+            _lightObjs[i].transform.GetChild(0).GetComponent<Renderer>().material= _mat;
 
         }
     }
